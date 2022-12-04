@@ -8,7 +8,6 @@ priority_of_items <-
 
 backpacks <- read_table(file = here("2022", "input3.txt"), col_names = "backpack_contents")
 
-
 # Part 1 ------------------------------------------------------------------
 
 get_common <- function(a, b){
@@ -33,15 +32,14 @@ backpacks |>
   pull(priority) |> 
   sum()
 
-
 # Part 2 ------------------------------------------------------------------
 
 backpacks |> 
   mutate(
     elf_group = rep(row_number(), length.out = n(), each = 3),
-    elf_id = rep(c("b1", "b2", "b3"), length.out = n(), each = 1)
+    bag_id = rep(c("b1", "b2", "b3"), length.out = n(), each = 1)
     ) |> 
-  pivot_wider(names_from = elf_id, values_from = backpack_contents) |> 
+  pivot_wider(names_from = bag_id, values_from = backpack_contents) |> 
   mutate(
     common_item = pmap_chr(list(b1, b2), get_common),
     common_item = pmap_chr(list(common_item, b3), get_common)
