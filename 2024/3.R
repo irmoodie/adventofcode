@@ -17,7 +17,7 @@ evaluated <- lapply(matches_parsed, function(x) {
 
 sum(unlist(evaluated))
 
-# P2 still not working
+# P2
 
 matches_do <- gregexpr("do\\(\\)", input)
 matches_dont <- gregexpr("don't\\(\\)", input)
@@ -33,12 +33,17 @@ new_evaluated <- list()
 
 for (i in 1:length(on_off)) {
   instructions <- sort(c(matches_do[[i]], matches_dont[[i]]))
-  for (j in 1:(length(instructions))){
+  for (j in 1:(length(instructions))) {
+    if (i > 1) {
+      if (!on_off[[i-1]][length(on_off[[i-1]])]) {
+        on_off[[i]][1:instructions[1]] <- FALSE
+      }
+    }
     if (names(instructions[j]) == "dont") {
       if (j != length(instructions)) {
         on_off[[i]][instructions[j]:instructions[j+1]] <- FALSE
       } else {
-         on_off[[i]][instructions[j]:length(instructions] <- FALSE
+         on_off[[i]][instructions[j]:length(on_off[[i]])] <- FALSE
       }
     }
   }
@@ -46,3 +51,4 @@ for (i in 1:length(on_off)) {
 }
 
 sum(unlist(new_evaluated))
+
