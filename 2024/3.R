@@ -33,9 +33,13 @@ new_evaluated <- list()
 
 for (i in 1:length(on_off)) {
   instructions <- sort(c(matches_do[[i]], matches_dont[[i]]))
-  for (j in 1:(length(instructions)-1)){
-    if (names(instructions[j])== "dont") {
-      on_off[[i]][instructions[j]:instructions[j+1]] <- FALSE
+  for (j in 1:(length(instructions))){
+    if (names(instructions[j]) == "dont") {
+      if (j != length(instructions)) {
+        on_off[[i]][instructions[j]:instructions[j+1]] <- FALSE
+      } else {
+         on_off[[i]][instructions[j]:length(instructions] <- FALSE
+      }
     }
   }
   new_evaluated[[i]] <- evaluated[[i]][on_off[[i]][mull_loc[[i]]]]
