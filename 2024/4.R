@@ -65,3 +65,26 @@ for (i in 1:nrow(x)) {
 xmas_count
 
 # P2
+
+x_mas_count <- 0
+
+for (i in 2:(nrow(x)-1)) {
+  for (j in 2:(ncol(x)-1)) {
+    if (x[i,j] == "A") {
+
+      ul <- c(i, j) + c(-1, -1) # up-left
+      ur <- c(i, j) + c(-1, 1)  # up-right
+      dl <- c(i, j) + c(1, -1)  # down-left
+      dr <- c(i, j) + c(1, 1)   # down-right
+
+      c1 <- paste(c(x[ul[1], ul[2]], x[i,j], x[dr[1], dr[2]]), collapse = "")
+      c2 <- paste(c(x[ur[1], ur[2]], x[i,j], x[dl[1], dl[2]]), collapse = "")
+
+      if ((c1 == "MAS" | c1 == "SAM") & (c2 == "MAS" | c2 == "SAM")) {
+        x_mas_count <- x_mas_count + 1
+      }
+    }
+  }
+}
+
+x_mas_count
